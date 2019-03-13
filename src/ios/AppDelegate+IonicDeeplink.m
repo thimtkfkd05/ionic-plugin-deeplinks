@@ -33,6 +33,10 @@ static NSString *const PLUGIN_NAME = @"IonicDeeplinkPlugin";
 
       // Send notice to the rest of our plugin that we didn't handle this URL
       [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"IonicLinksUnhandledURL" object:[url absoluteString]]];
+    } else if ([url.absoluteString hasPrefix:@"com.googleusercontent.apps"]) {
+      // Pass event through to GooglePlus Plugin
+      NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:url,@"url",sourceApplication,@"sourceApplication",annotation,@"annotation",nil];
+      [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginHandleOpenURLWithAppSourceAndAnnotationNotification object:options]];
     }
 
     return YES;
