@@ -37,6 +37,10 @@ static NSString *const PLUGIN_NAME = @"IonicDeeplinkPlugin";
       // Pass event through to GooglePlus Plugin
       NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:url,@"url",sourceApplication,@"sourceApplication",annotation,@"annotation",nil];
       [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginHandleOpenURLWithAppSourceAndAnnotationNotification object:options]];
+    } else if ([url.absoluteString hasPrefix:@"kakao"]) {
+      // Pass event through to Kakao Plugin
+      [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginHandleOpenURLNotification object:url]];
+      [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:UIApplicationDidBecomeActiveNotification object:url]];
     }
 
     return YES;
